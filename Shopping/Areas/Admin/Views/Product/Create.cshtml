@@ -1,0 +1,67 @@
+﻿@model ProductModel
+@{
+    ViewData["title"] = "Create Product";
+}
+<h1>Create Product</h1>
+<form asp-action="Create" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label">Price</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Description</label>
+        <textarea asp-for="Description" class="form-control" id="description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label">Category</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BrandId" class="control-label">Brand</label>
+        <select asp-for="BrandId" class="form-control" asp-items="@ViewBag.Brands"></select>
+        <span asp-validation-for="BrandId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile" class="control-label">Image</label>
+        <input asp-for="ImageFile" type="file" class="form-control-file" id="imgInput" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+        <img id="imgPreview" class="pt-2" alt="Image Preview" style="max-height: 150px;" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+    <a asp-action="Index">Back to list product</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        document.getElementById('imgInput').addEventListener('change', function (event) {
+            const input = event.target;
+            const preview = document.getElementById('imgPreview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+    </script>
+    <script>
+        CKEDITOR.replace('description');
+    </script>
+}

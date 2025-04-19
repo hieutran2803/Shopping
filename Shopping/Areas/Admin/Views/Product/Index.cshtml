@@ -1,0 +1,40 @@
+﻿@using Shopping.Models
+@model IEnumerable<ProductModel>
+@{
+    ViewData["title"] = "Product List";
+}
+<h4>Product List</h4>
+<a asp-area="Admin" asp-action="Create" asp-controller="Product" class="btn btn-warning">Create</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Description</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product Image</th>
+            <th scope="col">Product Slug</th>
+            <th scope="col">Product Category</th>
+            <th scope="col">Product Brand</th>
+            <th>Peoduct Manager</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model){
+            <tr>
+            <th scope="row">@item.Id</th>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.Price</td>
+            <td><img src="~/images/products/@item.Image" alt="Product Image" width="50" height="50"/></td>
+            <td>@item.Slug</td>
+            <td>@item.Category.Name</td>
+            <td>@item.Brand.Name</td>
+            <td>
+                    <a asp-area="Admin" asp-action="Edit" asp-controller="Product" asp-route-Id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-area="Admin" asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+            </tr>
+        }     
+    </tbody>
+</table>
